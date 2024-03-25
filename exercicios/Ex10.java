@@ -14,13 +14,25 @@ public class Ex10{
 
     System.out.print("Digite sua altura: ");
     double height=scanner.nextDouble();
+    scanner.nextLine();
 
-    System.out.print("Digite seu genero (M/F): ");
-    Genrer genrer=scanner.next().charAt(0)=='M'?Genrer.MALE:Genrer.FEMALE;
-    double idealWeight=0;
+    String b;
 
-    if(genrer==Genrer.MALE)idealWeight=72.7*height-58;
-    else idealWeight=62.1*height-44.7;
+    while(true){
+      System.out.print("Digite seu genero (M/F): ");
+      b=scanner.nextLine().toUpperCase();
+
+      boolean isValid=b.equals("M")||b.equals("F");
+
+      if(isValid)break;
+
+      System.out.println("Digite um valor valido...");
+    }
+
+    Genrer genrer=b.equals("M")?Genrer.MALE:Genrer.FEMALE;
+    double idealWeight=genrer==Genrer.MALE
+      ?(72.7*height-58)
+      :(62.1*height-44.7);
 
     System.out.println(idealWeight);
 
