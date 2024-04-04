@@ -1,3 +1,7 @@
+SHOW DATABASES;
+
+DROP DATABASE IF EXISTS Pizzaria;
+
 CREATE DATABASE Pizzaria;
 
 USE Pizzaria;
@@ -22,8 +26,6 @@ CREATE TABLE Pizza(
     PRIMARY KEY(id)
 );
 
-DROP TABLE Pizza;
-
 DESC Pizza;
 
 CREATE TABLE Pedido(
@@ -31,12 +33,11 @@ CREATE TABLE Pedido(
     CPF_cliente CHAR(11) NOT NULL,
     id_pizza INT NOT NULL,
     data_hora DATETIME NOT NULL,
+    endereco VARCHAR(50) NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(CPF_cliente) REFERENCES Cliente(CPF),
     FOREIGN KEY(id_pizza) REFERENCES Pizza(id)
 );
-
-DROP TABLE Pedido;
 
 DESC PEDIDO;
 
