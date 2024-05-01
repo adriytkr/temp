@@ -1,99 +1,68 @@
 CREATE DATABASE Restaurante;
 
 CREATE TABLE Cliente(
-	CPF
-    nome
-    email
-    senha
+	CPF CHAR(11) NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    senha VARCHAR(50) NOT NULL,
     PRIMARY KEY(CPF)
 );
 
 CREATE TABLE Funcionario(
-	CPF
-    nome
-    email
-    senha
+	CPF CHAR(11) NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+	senha VARCHAR(50) NOT NULL,
     PRIMARY KEY(CPF)
 );
 
-CREATE TABLE Fornecedor(
-	id
-    nome
+CREATE TABLE Produto(
+	id INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    preco DECIMAL NOT NULL,
     PRIMARY KEY(id)
 );
 
-CREATE TABLE Filial(
-	id
-    nome
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE Prato(
-	id
-    nome
-    preco
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE Bebida(
-	id
-    nome
-    preco
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE Ingrediente(
-	id
-    nome
-    quantidade
-    id_fornecedor
-    PRIMARY KEY(id)
-    FOREIGN KEY(id_fornecedor) REFERENCES(Fornecedor.id)
-);
-
-CREATE TABLE Cliente_Pedido(
-	id
-    cpf_cliente
-    id_prato_bebida
-    data_hora
-    PRIMARY KEY(id)
-    FOREIGN KEY(cpf_cliente) REFERENCES(Cliente.CPF)
-    FOREIGN KEYS(id_prato_bebida) REFERENCES(Prato.id or Bebida.id)
-);
-
-CREATE TABLE Fornecedor_Ingrediente(
-	id
-    id_filial
-    id_ingrediente
-    quantidade
-    data_hora
-    PRIMARY KEY(id)
-    FOREIGN KEY(id_filial) REFERENCES(Filial.id)
-    FOREIGN KEY(id_ingrediente) REFERENCES(Ingrediente.id)
+CREATE TABLE Cliente_Produto(
+	id INT NOT NULL,
+    cpf_cliente CHAR(11) NOT NULL,
+    id_produto INT NOT NULL,
+    data_hora DATETIME NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(cpf_cliente) REFERENCES(Cliente.CPF),
+    FOREIGN KEYS(id_produto) REFERENCES(Produto.id)
 );
 
 CREATE TABLE Entrega(
-	id
-    cpf_entregador
-    cpf_cliente
-    endereco
-    data_hora
-    PRIMARY KEY(id)
-    FOREIGN KEY(cpf_entregador) REFERENCES(Funcionario.CPF)
-    FOREIGN KEY(cpf_cliente) REFERENCES(Cliente.CPF)
+	id INT NOT NULL AUTO_INCREMENT,
+    cpf_entregador CHAR(11) NOT NULL,
+    cpf_cliente CHAR(11) NOT NULL,
+    endereco VARCHAR(50) NOT NULL,
+    data_hora DATETIME NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(cpf_entregador) REFERENCES(Funcionario.CPF),
+    FOREIGN KEY(cpf_cliente) REFERENCES(Cliente.CPF),
+);
+
+CREATE TABLE Entrega_Produto(
+	entrega_id INT NOT NULL,
+    produto_id INT NOT NULL,
+    FOREIGN KEY(entrega_id) REFERENCES(Entrega.id),
+    FOREIGN KEY(produto_id) REFERENCES(Produto.id)
 );
 
 CREATE TABLE Reserva(
-	id
-	id_mesa
-    cpf_cliente
-    quantidade
-    PRIMARY KEY(id)
-    FOREIGN KEY(id_mesa) REFERENCES(Mesa.id)
+	id INT NOT NULL AUTO_INCREMENT,
+	id_mesa INT NOT NULL,
+    cpf_cliente CHAR(11) NOT NULL,
+    quantidade_pessoa INT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(id_mesa) REFERENCES(Mesa.id),
+    FOREIGN KEY(cpf_cliente) REFERENCES(Cliente.CPF)
 );
 
 CREATE TABLE Mesa(
-	id
-    capacidade
+	id INT NOT NULL AUTO_INCREMENT,
+    capacidade INT NOT NULL,
     PRIMARY KEY(id)
 );
